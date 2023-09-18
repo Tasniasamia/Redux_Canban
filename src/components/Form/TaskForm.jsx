@@ -3,7 +3,7 @@ import MyModal from '../../components/Modal/Modal';
 import { useDispatch } from 'react-redux';
 import { AddSlice } from '../../Redux/Slice/Taskslice';
 
-const TaskForm = ({ isOpen, setIsOpen }) => {
+const TaskForm = ({ isOpen, setIsOpen ,item}) => {
     const dispatch=useDispatch();
   const { register, handleSubmit, control, reset } = useForm();
   const onSubmit = (data) =>{ console.log(data);
@@ -26,14 +26,14 @@ closeModal();
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col gap-3'>
           <label htmlFor="title">Title</label>
-          <input type="text" id="title" {...register("title")} />
+          <input type="text" id="title" defaultValue={item?item.title:""} {...register("title")} />
         </div>
         <div className='flex flex-col gap-3'>
           <label htmlFor="description">Description</label>
           <Controller
             name="description"
             control={control}
-            defaultValue=""
+            defaultValue={item?item.description:""}
             render={({ field }) => (
               <textarea {...field} rows="4" cols="50" />
             )}
@@ -41,11 +41,11 @@ closeModal();
         </div>
         <div className='flex flex-col gap-3'>
           <label htmlFor="deadline">Deadline</label>
-          <input type="date" id="deadline" {...register("deadline")} />
+          <input type="date" id="deadline" defaultValue={item?item.deadline:""} {...register("deadline")} />
         </div>
         <div className='flex flex-col gap-3'>
           <label htmlFor="assign_person">Assign to</label>
-          <select {...register("assign_person")} id="assign_person">
+          <select {...register("assign_person")} id="assign_person" defaultValue={item?item.assign_person:""}>
             <option value="Mir Hussain">Mir Hussain</option>
             <option value="Tasnia Sharin">Tasnia Sharin</option>
             <option value="Tasnim Akter">Tasnim Akter</option>
@@ -56,7 +56,7 @@ closeModal();
         </div>
         <div className='flex flex-col gap-3'>
           <label htmlFor="priority">Priority</label>
-          <select {...register("priority")} id="priority">
+          <select {...register("priority")} id="priority" defaultValue={item?item.priority:""}>
             <option value="High">High</option>
             <option value="Low">Low</option>
             <option value="medium">medium</option>
@@ -71,8 +71,8 @@ closeModal();
             value="Cancel"
             className='btn btn-danger'
           />
-
-          <input type="submit" value="Submit" className='btn btn-primary' />
+{item?"":<input type="submit" value="Submit" className='btn btn-primary' />
+}
         </div>
       </form>
     </MyModal>
