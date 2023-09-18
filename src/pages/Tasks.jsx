@@ -4,11 +4,23 @@ import TaskCard from '../components/tasks/TaskCard';
 import { useState } from 'react';
 // import Modal1 from '../components/Modal/Modal';
 import TaskForm from '../components/Form/TaskForm';
+import { useSelector } from 'react-redux';
 const Tasks = () => {
   let [isOpen, setIsOpen] = useState(false)
   function openModal() {
     setIsOpen(true)
   }
+
+  const {Task}=useSelector(state=>state.TaskSlice)
+  console.log(Task);
+
+
+  const pendingTask=Task.filter(item=>item.status==="pending");
+  const runningTask=Task.filter(item=>item.status==="running");
+  const doneTask=Task.filter(item=>item.status==="done");
+
+
+
   return (
     <>
          <TaskForm  isOpen={isOpen} setIsOpen={setIsOpen}></TaskForm>
@@ -51,35 +63,40 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {pendingTask.length}
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-            </div>
+  {pendingTask.map(item => (
+    <TaskCard key={item.id} task={item}/>
+  ))}
+</div>
           </div>
           <div className="relative h-[800px] overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>In Progress</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {runningTask.length}
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-              <TaskCard />
-            </div>
+  {runningTask.map(item => (
+    <TaskCard key={item.id} task={item}/>
+  ))}
+</div>
           </div>
           <div className="relative h-[800px] overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {doneTask.length}
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-            </div>
+  {doneTask.map(item => (
+    <TaskCard key={item.id} task={item}/>
+  ))}
+</div>
           </div>
         </div>
       </div>

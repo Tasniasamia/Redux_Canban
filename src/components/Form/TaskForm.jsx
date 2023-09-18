@@ -1,9 +1,17 @@
 import { Controller, useForm } from 'react-hook-form';
 import MyModal from '../../components/Modal/Modal';
+import { useDispatch } from 'react-redux';
+import { AddSlice } from '../../Redux/Slice/Taskslice';
 
 const TaskForm = ({ isOpen, setIsOpen }) => {
+    const dispatch=useDispatch();
   const { register, handleSubmit, control, reset } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) =>{ console.log(data);
+dispatch(AddSlice(data))
+reset();
+closeModal();
+
+};
   function closeModal() {
     setIsOpen(false);
   }
@@ -51,6 +59,8 @@ const TaskForm = ({ isOpen, setIsOpen }) => {
           <select {...register("priority")} id="priority">
             <option value="High">High</option>
             <option value="Low">Low</option>
+            <option value="medium">medium</option>
+
           </select>
         </div>
 
@@ -62,7 +72,7 @@ const TaskForm = ({ isOpen, setIsOpen }) => {
             className='btn btn-danger'
           />
 
-          <input type="submit"onClick={handleCancelClick} value="Submit" className='btn btn-primary' />
+          <input type="submit" value="Submit" className='btn btn-primary' />
         </div>
       </form>
     </MyModal>
