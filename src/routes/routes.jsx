@@ -4,6 +4,7 @@ import Tasks from '../pages/Tasks';
 import Chat from '../pages/Chat';
 import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
+import RTK_Part from '../pages/RTK_Part';
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -24,7 +25,10 @@ const routes = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
-      },
+      },{
+        path:"/RTK",
+        element:<RTK_Part/>
+      }
     ],
   },
 ]);

@@ -1,9 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
-import TaskSlice from '../Redux/Slice/Taskslice'
+import { configureStore } from '@reduxjs/toolkit';
+import TaskSlice from '../Redux/Slice/Taskslice';
 import userSlice from '../Redux/Slice/UserSlice';
-export const store = configureStore({
+import baseApi from '../Redux/Slice/Api';
+
+ const store = configureStore({
   reducer: {
-    TaskSlice:TaskSlice,
-    userSlice:userSlice
+    [baseApi.reducerPath]: baseApi.reducer,  
+    TaskSlice: TaskSlice,
+    userSlice: userSlice,
   },
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(baseApi.middleware),
+});
+ export default store;
